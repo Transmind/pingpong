@@ -1,0 +1,51 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (云函数使用云端安装，无需本地)
+node_modules/
+
+# 微信开发者工具本地配置（不要提交）
+project.private.config.json
+
+# 云函数本地包 (如有)
+cloudfiles/
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+*.temp
+
+# 编译产物 (如有)
+dist/
+build/
+
+# 测试文件夹 - 不需要提交到 Git
+tests/
+test-results/
+__tests__/
+__test__/
+test/
+spec/
+coverage/
+.nyc_output/
+playwright-report/
+
+# 测试配置文件 (可选，如需要本地运行测试可取消注释)
+playwright.config.js  
+
+# 敏感信息
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,104 @@
+<view class="container">
+  <!-- 右上角登出按钮 -->
+  <view class="logout-btn" bindtap="handleLogout">
+    <text>退出</text>
+  </view>
+
+  <!-- 用户信息展示 -->
+  <view class="user-info card">
+    <image 
+      class="avatar" 
+      src="{{userInfo.avatarUrl}}" 
+      mode="aspectFill"
+    ></image>
+    <text class="username">{{userInfo.nickName}}</text>
+  </view>
+
+  <!-- 日期 Tab -->
+  <view class="date-tabs">
+    <view 
+      class="tab {{currentTab === 0 ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-tab="0"
+    >
+      今天 {{todayDate}}
+    </view>
+    <view 
+      class="tab {{currentTab === 1 ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-tab="1"
+    >
+      明天 {{tomorrowDate}}
+    </view>
+  </view>
+
+  <!-- 时间段列表 -->
+  <view class="time-slots">
+    <block wx:for="{{timeSlots}}" wx:key="index">
+      <view class="slot card">
+        <view class="slot-header">
+          <text class="time-label">{{item.timeLabel}}</text>
+          <text class="slot-status {{item.status}}">
+            {{item.status === 'booked' ? '已锁定' : '可预定'}}
+          </text>
+        </view>
+        
+        <!-- 状态 A: 可预定 -->
+        <view class="slot-body" wx:if="{{item.status === 'available'}}">
+          <input 
+            class="room-input" 
+            placeholder="房号 (必须 4 位数字)" 
+            value="{{roomInput[item.time]}}"
+            bindinput="onRoomInput"
+            data-time="{{item.time}}"
+            maxlength="4"
+            type="number"
+          />
+          <button 
+            class="btn-primary"
+            bindtap="bookSlot"
+            data-time="{{item.time}}"
+          >
+            预定
+          </button>
+        </view>
+        
+        <!-- 状态 B: 他人预定 -->
+        <view class="slot-body" wx:if="{{item.status === 'booked' && !item.isMine}}">
+          <text class="locked-text">已锁定</text>
+        </view>
+        
+        <!-- 状态 C: 我的预定 -->
+        <view class="slot-body" wx:if="{{item.status === 'booked' && item.isMine}}">
+          <input 
+            class="room-input" 
+            placeholder="房号 (必须 4 位数字)" 
+            value="{{item.roomNumber}}"
+            disabled
+          />
+          <button 
+            class="btn-danger"
+            bindtap="cancelBooking"
+            data-time="{{item.time}}"
+          >
+            取消预定
+          </button>
+        </view>
+        
+        <!-- 他人预定：显示用户信息 -->
+        <view class="slot-info" wx:if="{{item.status === 'booked' && !item.isMine}}">
+          <image class="booking-avatar" src="{{item.avatarUrl}}" mode="aspectFill" binderror="onAvatarLoadError"></image>
+          <text class="booking-user">{{item.userName}}</text>
+          <text class="booking-room">房号：{{item.roomNumber}}</text>
+        </view>
+        
+        <!-- 我的预定：显示我的信息 -->
+        <view class="slot-info mine-info" wx:if="{{item.status === 'booked' && item.isMine}}">
+          <image class="booking-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" binderror="onAvatarLoadError"></image>
+          <text class="booking-user">{{userInfo.nickName}}</text>
+          <text class="booking-room mine">我的预定</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/booking/booking"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1890ff",
+    "navigationBarTitleText": "纳帕尔湾乒乓球室预定",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "cloudfunctionRoot": "cloudfunctions/"
+}

@@ -1,0 +1,181 @@
+.container {
+  padding: 20rpx;
+  position: relative;
+}
+
+.logout-btn {
+  position: fixed;
+  top: 100rpx;
+  right: 30rpx;
+  background-color: rgba(255, 77, 79, 0.9);
+  color: white;
+  padding: 12rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  z-index: 100;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin-right: 20rpx;
+  position: relative;
+}
+
+.avatar::after {
+  content: '';
+  position: absolute;
+  bottom: -8rpx;
+  right: -8rpx;
+  width: 24rpx;
+  height: 24rpx;
+  background-color: #1890ff;
+  border-radius: 50%;
+  border: 2rpx solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar::after::before {
+  content: '+';
+  color: white;
+  font-size: 16rpx;
+  font-weight: bold;
+}
+
+.username {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.date-tabs {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx;
+  background-color: white;
+  font-size: 28rpx;
+  border-radius: 12rpx 12rpx 0 0;
+  margin-right: 2rpx;
+}
+
+.tab:last-child {
+  margin-right: 0;
+}
+
+.tab.active {
+  background-color: #1890ff;
+  color: white;
+}
+
+.time-slots {
+  margin-top: 20rpx;
+}
+
+.slot {
+  margin-bottom: 20rpx;
+}
+
+.slot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.time-label {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.slot-status {
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+}
+
+.slot-status.available {
+  background-color: #f0f9ff;
+  color: #1890ff;
+}
+
+.slot-status.booked {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+}
+
+.slot-body {
+  display: flex;
+  gap: 20rpx;
+  align-items: center;
+}
+
+.room-input {
+  flex: 1;
+  padding: 20rpx;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.locked-text {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.slot-info {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+}
+
+.booking-avatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 25rpx;
+  margin-right: 16rpx;
+}
+
+.booking-user {
+  font-size: 26rpx;
+  color: #666;
+  margin-right: 20rpx;
+}
+
+.booking-room {
+  font-size: 24rpx;
+  color: #ff4d4f;
+  font-weight: bold;
+  background-color: #fff1f0;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.booking-room.mine {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.slot-info.mine-info {
+  border-top: 2rpx dashed #e8e8e8;
+  margin-top: 12rpx;
+  padding-top: 12rpx;
+}

@@ -1,0 +1,52 @@
+<view class="container login-container">
+  <view class="logo-section">
+    <text class="logo-icon">🏓</text>
+    <text class="logo-title">纳帕尔湾乒乓球室预定小程序</text>
+    <text class="logo-subtitle">智能化管理，轻松预定</text>
+  </view>
+
+  <view class="login-section">
+    <button 
+      class="btn-primary login-btn" 
+      bindtap="handleLogin"
+    >
+      一键登录
+    </button>
+    <text class="login-tip">点击授权以继续</text>
+  </view>
+
+  <!-- 头像选择弹窗 -->
+  <view class="avatar-modal" wx:if="{{showAvatarModal}}">
+    <view class="avatar-modal-content">
+      <view class="avatar-modal-header">
+        <text>请选择头像</text>
+      </view>
+      <view class="avatar-modal-body">
+        <view class="avatar-preview">
+          <image 
+            class="preview-avatar" 
+            src="{{tempAvatarUrl}}" 
+            mode="aspectFill"
+          ></image>
+        </view>
+        <text class="avatar-tip">点击下方按钮选择头像</text>
+        <button 
+          class="btn-choose-avatar"
+          open-type="chooseAvatar"
+          bindchooseavatar="onChooseAvatar"
+        >
+          选择头像
+        </button>
+      </view>
+      <view class="avatar-modal-footer">
+        <button 
+          class="btn-confirm"
+          bindtap="confirmAvatar"
+          disabled="{{!tempAvatarUrl}}"
+        >
+          确认并使用
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

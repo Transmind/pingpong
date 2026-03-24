@@ -1,0 +1,23 @@
+{
+  "name": "pingpong",
+  "version": "1.0.0",
+  "description": "微信小程序 + 微信云开发实现的乒乓球室管理系统。",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [
+    "wechat-miniprogram",
+    "cloudbase"
+  ],
+  "author": "KK",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {}
+}

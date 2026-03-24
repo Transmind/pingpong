@@ -1,0 +1,27 @@
+{
+  "description": "乒乓球预定系统",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "condition": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.3.4",
+  "appid": "wxbe8d6d2ebba4282c",
+  "projectname": "pingpong",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
+}
