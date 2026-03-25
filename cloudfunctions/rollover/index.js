@@ -36,13 +36,10 @@ exports.main = async (event, context) => {
       })
       .remove()
     
-    // 步骤 3: 将明天的记录移到今天
+    // 步骤 3: 将明天的记录移到今天（先创建，后删除，避免数据丢失）
     const updates = tomorrowBookings.data.map(async (booking) => {
-      // 删除明天的记录
-      await db.collection('bookings').doc(booking._id).remove()
-      
-      // 创建今天的记录
-      return db.collection('bookings').add({
+      // 先创建今天的记录
+      const newBooking = await db.collection('bookings').add({
         data: {
           date: todayStr,
           time_slot: booking.time_slot,
@@ -53,6 +50,11 @@ exports.main = async (event, context) => {
           createTime: db.serverDate()
         }
       })
+      
+      // 再删除明天的记录
+      await db.collection('bookings').doc(booking._id).remove()
+      
+      return newBooking
     })
     
     if (updates.length > 0) {
