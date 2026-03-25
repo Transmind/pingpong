@@ -9,7 +9,7 @@ const db = cloud.database()
 exports.main = async (event, context) => {
   const { date, time_slot, room_number, openid, avatarUrl, userName } = event
   
-  console.log('[createBooking] 接收参数:', { date, time_slot, room_number, openid, hasAvatarUrl: !!avatarUrl, hasUserName: !!userName })
+  console.log('[createBooking] 接收参数:', { date, time_slot, room_number, openid, avatarUrl, userName })
   
   if (!avatarUrl || !userName) {
     console.error('[createBooking] 缺少用户信息：avatarUrl 或 userName 为空')
@@ -65,15 +65,15 @@ exports.main = async (event, context) => {
       }
     }
     
-    // 创建新预定，使用 userAvatar 和 nickName 字段
+    // 创建新预定，统一使用 avatarUrl 和 userName 字段
     const res = await db.collection('bookings').add({
       data: {
         date: date,
         time_slot: time_slot,
         room_number: room_number,
         openid: openid,
-        userAvatar: avatarUrl,   // 统一字段名
-        nickName: userName,       // 统一字段名
+        avatarUrl: avatarUrl,
+        userName: userName,
         createTime: db.serverDate()
       }
     })
