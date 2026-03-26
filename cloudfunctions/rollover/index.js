@@ -8,9 +8,7 @@ const db = cloud.database()
 
 exports.main = async (event, context) => {
   try {
-    const today = new Date()
-    const tomorrow = new Date(today)
-    tomorrow.setDate(tomorrow.getDate() + 1)
+    const now = new Date()
     
     const formatDate = (date) => {
       const year = date.getFullYear()
@@ -19,57 +17,68 @@ exports.main = async (event, context) => {
       return `${year}-${month}-${day}`
     }
     
-    const todayStr = formatDate(today)
+    const todayStr = formatDate(now)
+    
+    // 计算后天日期
+    const dayAfterTomorrow = new Date(now)
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2)
+    const dayAfterTomorrowStr = formatDate(dayAfterTomorrow)
+    
+    // 步骤 1: 删除今天的所有记录（今天已过期）
+    const todayBookings = await db.collection('bookings')
+      .where({
+        date: todayStr
+      })
+      .get()
+    
+    if (todayBookings.data.length > 0) {
+      await db.collection('bookings')
+        .where({
+          date: todayStr
+        })
+        .remove()
+    }
+    
+    // 步骤 2: 初始化后天的记录（清空后天数据，确保只保留今天和明天）
+    const dayAfterTomorrowBookings = await db.collection('bookings')
+      .where({
+        date: dayAfterTomorrowStr
+      })
+      .get()
+    
+    if (dayAfterTomorrowBookings.data.length > 0) {
+      await db.collection('bookings')
+        .where({
+          date: dayAfterTomorrowStr
+        })
+        .remove()
+    }
+    
+    // 步骤 3: 可选：检查明天是否有数据，如果没有则提示（但不过度干预）
+    const tomorrow = new Date(now)
+    tomorrow.setDate(tomorrow.getDate() + 1)
     const tomorrowStr = formatDate(tomorrow)
     
-    // 步骤 1: 先获取明天的预定记录
     const tomorrowBookings = await db.collection('bookings')
       .where({
         date: tomorrowStr
       })
       .get()
     
-    // 步骤 2: 清空今天的预定（今天已过期）
-    await db.collection('bookings')
-      .where({
-        date: todayStr
-      })
-      .remove()
-    
-    // 步骤 3: 将明天的记录移到今天（先创建，后删除，避免数据丢失）
-    const updates = tomorrowBookings.data.map(async (booking) => {
-      // 先创建今天的记录
-      const newBooking = await db.collection('bookings').add({
-        data: {
-          date: todayStr,
-          time_slot: booking.time_slot,
-          room_number: booking.room_number,
-          openid: booking.openid,
-          avatarUrl: booking.avatarUrl,
-          userName: booking.userName,
-          createTime: db.serverDate()
-        }
-      })
-      
-      // 再删除明天的记录
-      await db.collection('bookings').doc(booking._id).remove()
-      
-      return newBooking
-    })
-    
-    if (updates.length > 0) {
-      await Promise.all(updates)
-    }
-    
     return {
       success: true,
-      message: `滚存完成：${tomorrowBookings.data.length} 条记录已滚存至今天`
+      message: `清理完成：删除了 ${todayStr} 的 ${todayBookings.data.length} 条记录，清空了 ${dayAfterTomorrowStr} 的 ${dayAfterTomorrowBookings.data.length} 条记录`,
+      details: {
+        deletedToday: todayBookings.data.length,
+        deletedDayAfterTomorrow: dayAfterTomorrowBookings.data.length,
+        tomorrowCount: tomorrowBookings.data.length
+      }
     }
   } catch (err) {
-    console.error('滚存失败:', err)
+    console.error('清理失败:', err)
     return {
       success: false,
-      message: '滚存失败: ' + err.message
+      message: '清理失败：' + err.message
     }
   }
 }

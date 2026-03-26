@@ -2,11 +2,11 @@
   "permissions": {
     "openapi": []
   },
-    "triggers": [
+  "triggers": [
     {
       "name": "dailyRollover",
       "type": "timer",
-      "config": "0 0 0 * * *",
+      "config": "0 30 23 * * *",
       "function": "rollover"
     }
   ]
