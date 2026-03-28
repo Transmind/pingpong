@@ -47,7 +47,7 @@
         <view class="slot-body" wx:if="{{item.status === 'available'}}">
           <input 
             class="room-input" 
-            placeholder="房号 (必须 4 位数字)" 
+            placeholder="请输入 4 位小区房号" 
             value="{{roomInput[item.time]}}"
             bindinput="onRoomInput"
             data-time="{{item.time}}"
@@ -72,7 +72,7 @@
         <view class="slot-body" wx:if="{{item.status === 'booked' && item.isMine}}">
           <input 
             class="room-input" 
-            placeholder="房号 (必须 4 位数字)" 
+            placeholder="请输入 4 位小区房号" 
             value="{{item.roomNumber}}"
             disabled
           />
