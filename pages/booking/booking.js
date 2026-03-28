@@ -243,7 +243,7 @@ Page({
     if (myTodayBookings.length >= 3) {
       wx.showModal({
         title: '无法预定',
-        content: '每人在一天内不可占用超过 3 个时段',
+        content: '每位邻居在一天内请不要占用超过 3 个时段',
         showCancel: false
       })
       // 清空该时段的房号输入，UI 复位
